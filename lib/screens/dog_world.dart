@@ -15,7 +15,27 @@ class _DogWorldState extends State<DogWorld>{
         title: const Text('Search Dog Breed'),
         centerTitle: true,
       ),
-      body: Container(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Enter dog breed...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Colors.grey, width: 2),
+                  ),
+                ),
+                onChanged: (value){
+
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
