@@ -1,7 +1,10 @@
 
 import 'package:ambibuzz/controller/breed_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../widget/breed_tile.dart';
 
 class DogWorld extends StatefulWidget{
 
@@ -11,6 +14,7 @@ class DogWorld extends StatefulWidget{
 
 class _DogWorldState extends State<DogWorld>{
   BreedController? breedController;
+  bool isLoading = false;
 
   @override
   initState(){
@@ -39,25 +43,38 @@ class _DogWorldState extends State<DogWorld>{
                 ),
                 onChanged: (value){
                   if(value.length > 3){
-                    breedController!.getBreedData(value);
+                    setState((){
+                      isLoading = true;
+                    });
+                    breedController!.getBreedData(value).then((e)=> setState((){isLoading = false;}));
                   }
                 },
               ),
-              ...List.generate(breedController!.breedInfoList.length, (index){
-                return ListTile(
-                  leading: Image.network(
-                    breedController!.breedInfoList[index].referenceImageId ?? '',
-                    errorBuilder: (context, exception, stackTrace){
-                      return Image.asset(
-                        "assets/images/not_found.png",
-                        width: 90,
-                      );
-                    },
-                  ),
-                  title: Text(breedController!.breedInfoList[index].name ?? 'Name not found') ,
-                  subtitle: Text(breedController!.breedInfoList[index].origin ?? 'Origin not mentioned.'),
-                );
-              })
+               isLoading ?
+                   const SizedBox(
+                     height: 200,
+                     width: 200,
+                     child: Center(
+                       child: CupertinoActivityIndicator(),
+                     ),
+                   ) :
+                   !breedController!.breedInfoList.isEmpty ?
+                       Column(
+                         children: [
+                           ...List.generate(breedController!.breedInfoList.length, (index) {
+                             return BreedTile(
+                                 index: index,
+                                 breedController: breedController
+                             );
+                          })
+                         ],
+                       ) : Container(
+                             height: 100,
+                             child: Center(
+                               child: Text('No match found...'),
+                             ),
+                           )
+
             ],
           ),
         ),

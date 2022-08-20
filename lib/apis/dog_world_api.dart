@@ -24,7 +24,6 @@ Future<List<BreedInfo>?> getBreedInfo(String query) async{
         ),
 
     );
-
     if(response.statusCode == 200){
       List<BreedInfo> breedInfo = [];
       for(int i=0; i<response.data!.length; i++){
@@ -38,4 +37,30 @@ Future<List<BreedInfo>?> getBreedInfo(String query) async{
   }
 
   return null;
+}
+
+Future<String> getBreedImage(String imageId) async{
+  Dio dio = Dio();
+  String url = URLS.breed_image+imageId;
+
+  try{
+    //call to the api to get info related to the breed
+    final response = await dio.get(
+      url,
+      options: Options(headers: {
+        'x-api-key': URLS.api_key
+      },
+      ),
+
+    );
+
+    if(response.statusCode == 200){
+       return response.data["url"];
+    }
+  }
+  catch(exception){
+    Fluttertoast.showToast(msg: 'Something went wrong');
+  }
+
+  return "";
 }

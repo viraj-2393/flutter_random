@@ -2,12 +2,14 @@
 
 import 'package:ambibuzz/apis/dog_world_api.dart';
 import 'package:ambibuzz/models/BreedInfo.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class BreedController extends GetxController{
   RxList<BreedInfo> breedInfoList = <BreedInfo>[].obs;
+  RxBool isLoading = false.obs;
 
-  void getBreedData(String query) async{
+  Future<void> getBreedData(String query) async{
     List<BreedInfo>?  breedInfo = await getBreedInfo(query);
     if(breedInfo != null){
       breedInfoList.clear();
@@ -15,5 +17,11 @@ class BreedController extends GetxController{
          breedInfoList.add(breedInfo[i]);
        }
     }
+  }
+
+  Future<String> getBreedImageData(String imageId) async{
+    Fluttertoast.showToast(msg: 'Loading please wait...');
+    String imgLink = await getBreedImage(imageId);
+    return imgLink;
   }
 }
