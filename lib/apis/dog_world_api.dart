@@ -44,7 +44,7 @@ Future<String> getBreedImage(String imageId) async{
   String url = URLS.breed_image+imageId;
 
   try{
-    //call to the api to get info related to the breed
+    //call to the api to get info related to the breed image
     final response = await dio.get(
       url,
       options: Options(headers: {

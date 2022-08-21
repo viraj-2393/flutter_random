@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 class BreedController extends GetxController{
   RxList<BreedInfo> breedInfoList = <BreedInfo>[].obs;
-  RxBool isLoading = false.obs;
 
   Future<void> getBreedData(String query) async{
     List<BreedInfo>?  breedInfo = await getBreedInfo(query);

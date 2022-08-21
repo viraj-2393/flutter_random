@@ -1,4 +1,5 @@
 import 'package:ambibuzz/screens/dog_world.dart';
+import 'package:ambibuzz/screens/world_countries.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -73,7 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 10,),
             InkWell(
               child: _buildFeatureTile(Colors.redAccent, 'assets/images/countries.png', "Countries of the World"),
-              onTap: (){},
+              onTap: (){
+                Get.to(() => WorldCountries());
+              },
             ),
             const SizedBox(height: 10,),
             InkWell(
